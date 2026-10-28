@@ -13,6 +13,9 @@ public class SelfCheck {
         int[] parsed = TimesheetAnalyzer.parseHours("9;8;7;10;8");
         ok &= parsed.length == 5;
         ok &= parsed[0] == 9 && parsed[1] == 8;
+        
+        // Сумма 42, значит недельная переработка = max(0, 42 - 40) = 2
+        ok &= TimesheetAnalyzer.weeklyOvertime(parsed) == 2;
 
         try {
             TimesheetAnalyzer.parseHours("8;8;17;8;8");

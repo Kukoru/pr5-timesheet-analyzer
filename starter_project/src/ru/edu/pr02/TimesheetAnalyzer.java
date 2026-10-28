@@ -5,6 +5,7 @@ public class TimesheetAnalyzer {
     // Вариант 7: норма часов в день = 40
     public static final int NORMAL_HOURS_PER_DAY = 40;
     public static final int MAX_HOURS_PER_DAY = 16; // Из TODO 1 в исходнике
+    public static final int WEEKLY_NORM = 40; // Согласно правилу из методички
 
     public static int[] parseHours(String line) {
         if (line == null || line.trim().isEmpty()) {
@@ -59,13 +60,8 @@ public class TimesheetAnalyzer {
         return count;
     }
 
+    // ИСПРАВЛЕНО: Теперь считается по формуле max(0, сумма - 40)
     public static int weeklyOvertime(int[] hours) {
-        int overtime = 0;
-        for (int h : hours) {
-            if (h > NORMAL_HOURS_PER_DAY) {
-                overtime += (h - NORMAL_HOURS_PER_DAY);
-            }
-        }
-        return overtime;
+        return Math.max(0, total(hours) - WEEKLY_NORM);
     }
 }
